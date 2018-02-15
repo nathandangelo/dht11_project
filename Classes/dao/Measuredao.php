@@ -1,5 +1,7 @@
 <?php
 
+use domain\Measure;
+
 include "DaoBase.php";
 
 class MesureDao extends DaoBase {
@@ -11,9 +13,18 @@ class MesureDao extends DaoBase {
     public function createMesure($mesureobjet) {
         
     $query = $this->bdd->prepare("INSERT INTO relevees (temperature, humidite) VALUES (:temperature,:humidite)");
+    
     $query->bindParam(":temperature",$mesureobjet->temperature);
+    
     $query->bindParam(":humidite",$mesureobjet->humidite);
+    
     $query->execute();
+    
+    $id =$this->bdd->lastInsertId();
+    
+    $mesureobjet->id =$id;
+    
+    return $id;
     
     }
     

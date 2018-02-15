@@ -1,4 +1,5 @@
 <?php
+namespace domain;
 
 class Measure
 
@@ -11,11 +12,13 @@ class Measure
     
     public $datetime;
     
-    public function __construct($temperature,$humidite)
+    public function __construct($id,$temperature,$humidite)
     
     {
+        $this->id = $id;
         $this->temperature = $temperature;
         $this->humidite = $humidite;
+        
         
     }
     
