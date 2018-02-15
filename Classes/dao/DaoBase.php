@@ -1,4 +1,6 @@
 <?php
+namespace dao;
+
 class DaoBase {
     protected $bdd;
     
@@ -7,5 +9,9 @@ class DaoBase {
         $this->bdd = new \PDO("mysql:host=".$config['db.host'].";dbname=".$config['db.name'].";charset=utf8",
             $config['db.username'],
             $config['db.password']);
+    }
+    public function close() {
+        
+        $this->bdd = null;
     }
 }

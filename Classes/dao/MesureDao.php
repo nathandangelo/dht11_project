@@ -1,5 +1,6 @@
 <?php
 
+namespace dao;
 use domain\Measure;
 
 include "DaoBase.php";
@@ -43,7 +44,7 @@ class MesureDao extends DaoBase {
                 $temperature = $donnees["temperature"];
                 $humidite = $donnees["humidite"];
                 
-                $result = new Measure($temperature, $humidite);
+                $result = new Measure($id,$temperature, $humidite);
             }
         }
         

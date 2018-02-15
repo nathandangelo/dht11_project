@@ -1,10 +1,13 @@
 <?php
 namespace test;
-include 'autoload.inc.php';
+
 use PHPUnit\Framework\TestCase;
 use domain\Measure;
+use dao\MesureDao;
 
-class MeasureDao extends TestCase {
+include 'autoload.inc.php';
+
+class MeasureDaoTest extends TestCase {
             
         private $measureDao; 
         /**
@@ -16,7 +19,7 @@ class MeasureDao extends TestCase {
             
             $config = include '../inc/config.inc.php';
             
-            $this->measureDao = new MeasureDao($config);
+            $this->measureDao = new MesureDao($config);
         }
         /**
          * Cleans up the environment after running a test.
@@ -30,13 +33,47 @@ class MeasureDao extends TestCase {
             parent::tearDown();
         }
         
+        public function testReadmesurebyid() {
+            
+            $measure = $this->measureDao->readmesurebyid(1);            
+            
+            $this->assertEquals(25, $measure->temperature);
+            
+            $this->assertEquals(45, $measure->humidite);
+        }
+        
+        
         public function testInsertMeasure() {
             
-            $measure = new Measure(null,25, 58);
+            $mesureobjet= new Measure(null,25, 58);
+            
             $id = $this->measureDao->createMesure($mesureobjet);
+            
             $newmeasure->$this->readmesurebyid($id);
-            $this->assertEquals(25, $measure->temperature);
-            $this->assertEquals(58, $measure->humidite);
+            
+            $this->assertEquals(25, $newmeasure->temperature);
+            
+            $this->assertEquals(58, $newmeasure->humidite);
+            
+            $this->measureDao->deletemesure($id);
+            
+        }
+        
+        public function testDeleteMeasure() {
+            
+            $mesureobjet = new Measure(null, 33, 54);
+            
+            $id = $this->measureDao->createMesure($mesureobjet);
+            
+            $newMeasure = $this->measureDao->readmesurebyid($id);
+            
+            $this->assertNotNull($newMeasure);
+            
+            $this->measureDao->deletemesure($id);
+            
+            $deletedMeasure = $this->measureDao->readmesurebyid($id);
+            
+            $this->assertNull($deletedMeasure);
         }
                 
     }
